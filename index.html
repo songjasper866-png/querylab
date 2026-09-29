@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f8fa">
+  <title>QueryLab · SQL 练习</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-lockup">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div>
+          <p class="eyebrow">SQL PRACTICE</p>
+          <h1>QueryLab</h1>
+        </div>
+      </div>
+      <button class="icon-button" id="profileButton" aria-label="打开个人资料" title="个人资料">
+        <span class="avatar">L</span>
+      </button>
+    </header>
+
+    <main class="main-content">
+      <section class="welcome-row" aria-labelledby="pageTitle">
+        <div>
+          <p class="kicker">周二，继续保持</p>
+          <h2 id="pageTitle">今天练什么？</h2>
+        </div>
+        <div class="streak-pill" aria-label="连续学习 7 天">
+          <span class="flame" aria-hidden="true">✦</span>
+          <strong>7</strong>
+          <span>天</span>
+        </div>
+      </section>
+
+      <section class="stats-strip" aria-label="学习概览">
+        <div class="stat-block"><strong>12</strong><span>已完成</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-block"><strong>86%</strong><span>正确率</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-block"><strong>24</strong><span>分钟</span></div>
+      </section>
+
+      <section class="section-heading">
+        <div>
+          <p class="section-label">TODAY'S PATH</p>
+          <h3>练习路径</h3>
+        </div>
+        <button class="text-button" id="allQuestionsButton">全部题目 <span aria-hidden="true">→</span></button>
+      </section>
+
+      <div class="category-tabs" role="tablist" aria-label="题目分类">
+        <button class="category-tab active" data-filter="all" role="tab" aria-selected="true">全部</button>
+        <button class="category-tab" data-filter="基础" role="tab" aria-selected="false">基础查询</button>
+        <button class="category-tab" data-filter="聚合" role="tab" aria-selected="false">聚合</button>
+        <button class="category-tab" data-filter="连接" role="tab" aria-selected="false">多表连接</button>
+      </div>
+
+      <section class="challenge-card" aria-labelledby="challengeTitle">
+        <div class="challenge-topline">
+          <span class="question-badge" id="questionNumber">第 03 题</span>
+          <span class="difficulty medium" id="difficultyLabel">中等</span>
+        </div>
+        <div class="challenge-title-row">
+          <div>
+            <p class="challenge-category" id="challengeCategory">聚合查询</p>
+            <h3 id="challengeTitle">找出消费次数最多的用户</h3>
+          </div>
+          <button class="bookmark-button" id="bookmarkButton" aria-label="收藏本题" title="收藏本题"><span aria-hidden="true">☆</span></button>
+        </div>
+        <p class="challenge-description" id="challengeDescription">统计每位用户的订单数量，返回订单数最多的用户姓名和订单数。</p>
+
+        <div class="schema-preview">
+          <div class="schema-heading"><span class="database-dot"></span><span>orders</span><span class="schema-meta">4 columns</span></div>
+          <div class="schema-columns" id="schemaColumns">
+            <span>order_id <em>INT</em></span><span>user_name <em>TEXT</em></span><span>amount <em>DECIMAL</em></span><span>created_at <em>DATE</em></span>
+          </div>
+        </div>
+
+        <div class="editor-wrap">
+          <div class="editor-toolbar">
+            <span class="editor-language"><span class="language-dot"></span>SQL</span>
+            <span class="editor-hint">⌘ + Enter 执行</span>
+          </div>
+          <div class="code-editor">
+            <div class="line-numbers" id="lineNumbers">1<br>2<br>3<br>4<br>5</div>
+            <textarea id="sqlInput" spellcheck="false" aria-label="SQL 编辑器">SELECT user_name, COUNT(*) AS order_count
+FROM orders
+GROUP BY user_name
+ORDER BY order_count DESC
+LIMIT 1;</textarea>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button class="secondary-button" id="resetButton"><span aria-hidden="true">↺</span> 重置</button>
+          <button class="primary-button" id="runButton"><span aria-hidden="true">▶</span> 运行查询</button>
+        </div>
+
+        <div class="result-panel" id="resultPanel" aria-live="polite">
+          <div class="result-header"><span><span class="result-dot"></span>查询结果</span><span class="result-status" id="resultStatus">等待运行</span></div>
+          <div class="result-content" id="resultContent"><span class="result-placeholder">运行查询后，结果会显示在这里</span></div>
+        </div>
+
+        <div class="feedback" id="feedback" hidden>
+          <div class="feedback-icon" id="feedbackIcon">✓</div>
+          <div><strong id="feedbackTitle">回答正确</strong><p id="feedbackText">很漂亮，这个查询返回了正确的结果。</p></div>
+          <button class="next-button" id="nextButton" aria-label="下一题" title="下一题">→</button>
+        </div>
+      </section>
+
+      <section class="progress-section" aria-label="本组进度">
+        <div class="progress-label"><span>本组进度</span><strong id="progressText">3 / 8</strong></div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="主导航">
+      <button class="nav-item active" data-nav="练习"><span class="nav-icon">⌂</span><span>练习</span></button>
+      <button class="nav-item" data-nav="题库"><span class="nav-icon">▤</span><span>题库</span></button>
+      <button class="nav-item" data-nav="错题"><span class="nav-icon">◷</span><span>错题本</span></button>
+      <button class="nav-item" data-nav="我的"><span class="nav-icon">●</span><span>我的</span></button>
+    </nav>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
